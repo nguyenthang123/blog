@@ -1,28 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Nav from './Component/Nav';
+import NoteList from './Component/NoteList';
+import NoteForm from './Component/NoteForm';
+import {connect} from 'react-redux';
 
 class App extends Component {
-  render() {
+  showForm = () => {
+     if(this.props.Status){
+     return <NoteForm/>
+     }
+  }
+  render() {  
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+         <Nav/>
+         <div className="container">
+           <div  className="row">
+              <NoteList GetAllData = {()=> this.GetallData()}/>
+              {
+                 this.showForm()
+              }
+           </div>
+         </div>
       </div>
     );
   }
 }
-
-export default App;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    Status: state.Status
+  }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ChangeEditstatus: () => {
+      dispatch({
+        type:"CHANGE_EDIT_STT"
+      })
+    }
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(App)
