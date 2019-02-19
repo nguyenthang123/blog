@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
  class NoteListItem extends Component {
+   TwoActionButton = () => {
+       this.props.ChangeEditstatus();
+      this.props.GetDataObject(this.props.Notedata)
+   }
+   DeteleDatatab = () => {
+     this.props.DeteleData(this.props.Notedata.key);
+   }
   render() {
     return (
         <div className="card">
         <div className="card-header" role="tab" id="section1HeaderId">
           <h5 className="mb-0">
-            <a className="float-left" data-toggle="collapse" data-parent="#accordianId" href={"#number" + this.props.i} aria-expanded="true" aria-controls="section1ContentId">
+            <a className="float-left" data-toggle="collapse" data-parent="#accordianId" href={"#number" + this.props.key} aria-expanded="true" aria-controls="section1ContentId">
               { 
                    this.props.Notetitle
               }
             </a>
-            <input name="" id="" onClick={this.props.ChangerSTT()} className="btn btn-outline-success float-right" type="button" value="Sửa"/>
-            <input name="" id="" className="btn btn-outline-danger float-right mr-2" type="button" value="Xóa"/>
+            <button className="btn btn-outline-success float-right" onClick={ () => this.TwoActionButton()}> Sửa </button>
+            <input name="" id="" className="btn btn-outline-danger float-right mr-2" type="button" value="Xóa" onClick={() => this.DeteleDatatab()}/>
           </h5>
         </div>
-        <div id={"number" + this.props.i} className="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
+        <div id={"number" + this.props.key} className="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
           <div className="card-body">
                {
                     this.props.NoteContent
@@ -26,11 +33,31 @@ import {connect} from 'react-redux';
     )
   }
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    ChangerSTT: () => {
-      dispatch({type:'CHANGE_EDIT_STT'})
-    }
+    Status: state.Status
   }
 }
-export default connect( mapDispatchToProps)(NoteListItem)
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ChangeEditstatus: () => {
+      dispatch({
+        type:"CHANGE_EDIT_STT",
+      })
+    },
+    GetDataObject: (ItemObject) => {
+      dispatch({
+        type:"GetEditData",
+        ItemObject
+      })
+    },
+    DeteleData: (IdDetele) => {
+      dispatch({
+        type:"Detele",
+        IdDetele
+      })
+    }
+
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(NoteListItem)

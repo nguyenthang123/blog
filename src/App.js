@@ -4,6 +4,7 @@ import Nav from './Component/Nav';
 import NoteList from './Component/NoteList';
 import NoteForm from './Component/NoteForm';
 import {connect} from 'react-redux';
+import AlertInfo from './Component/AlertInfo';
 
 class App extends Component {
   showForm = () => {
@@ -15,6 +16,7 @@ class App extends Component {
     return (
       <div className="App">
          <Nav/>
+         <AlertInfo/>
          <div className="container">
            <div  className="row">
               <NoteList GetAllData = {()=> this.GetallData()}/>

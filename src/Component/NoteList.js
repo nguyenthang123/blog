@@ -32,7 +32,8 @@ export default class NoteList extends Component {
      if(this.state.Data) {
         return this.state.Data.map((value,key) => {
              return (
-                 <NoteListItem key={key} Notetitle={value.Notetitle} NoteContent={value.Notecontent}/>
+                 <NoteListItem key={value.key} Notetitle={value.Notetitle} NoteContent={value.Notecontent}
+                  Notedata={value}/>
              );
         });
      }
